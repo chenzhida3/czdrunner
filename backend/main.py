@@ -12,6 +12,7 @@ from fastapi import FastAPI
 
 from autotest.config import config
 from autotest.corelibs.logger import init_logger, logger
+from autotest.db.redis import init_redis_pool
 
 app = FastAPI(title="czdrunnrt",
               description=config.PROJECT_DESC,
@@ -25,6 +26,12 @@ async def init_app():
 @app.on_event("startup")
 async def startup():
     await init_app()  # 加载
+    app.state.redis = await init_redis_pool()
+
+@app.on_event("shutdown")
+async def shutdown():
+    await app.state.redis.close()  # 关闭redis
+
 
 if __name__ == '__main__':
-    uvicorn.run(app='main:app', host="127.0.0.1", port=8101, reload=True)
+    uvicorn.run(app='main:app', host="127.0.0.1", port=8001, reload=True)
