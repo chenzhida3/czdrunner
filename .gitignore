@@ -1,0 +1,3 @@
+# 不提交到git的文件
+__pycache__/
+venv/
