@@ -7,9 +7,8 @@
 @Email   :   Chenzhida3@163.com
 @Desc    :   后台配置文件
 '''
-from dataclasses import Field
 import typing
-from pydantic import BaseSettings
+from pydantic import BaseSettings, Field
 
 project_desc = "🎉czdrunner项目 接口汇总🎉"
 __version__ = "2.1.0"
@@ -19,6 +18,7 @@ class Configs(BaseSettings):
     PROJECT_VERSION: typing.Union[int, str] = __version__
 
     GLOBAL_ENCODING: str = 'utf8'  # 全局编码
+    STATIC_DIR: str = 'static'  # 静态文件目录
 
     # 日志部分
     LOGGER_DIR: str = "logs"  # 日志文件夹名
