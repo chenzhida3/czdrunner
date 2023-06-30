@@ -8,17 +8,19 @@
 @Desc    :   后台程序总入口
 '''
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 
 from autotest.config import config
 from autotest.corelibs.logger import init_logger, logger
 from autotest.db.redis import init_redis_pool
 from autotest.init.mount import init_mount
 from autotest.init.exception import init_exception
+from autotest.init.dependencies import set_global_request
 
 app = FastAPI(title="czdrunnrt",
               description=config.PROJECT_DESC,
-              version=config.PROJECT_VERSION)
+              version=config.PROJECT_VERSION,
+              dependencies=[Depends(set_global_request)])
 
 async def init_app():
     """应用注册中心"""
