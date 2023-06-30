@@ -14,6 +14,7 @@ from autotest.config import config
 from autotest.corelibs.logger import init_logger, logger
 from autotest.db.redis import init_redis_pool
 from autotest.init.mount import init_mount
+from autotest.init.exception import init_exception
 
 app = FastAPI(title="czdrunnrt",
               description=config.PROJECT_DESC,
@@ -22,6 +23,7 @@ app = FastAPI(title="czdrunnrt",
 async def init_app():
     """应用注册中心"""
     init_mount(app)  # 挂载静态文件
+    init_exception(app)  # 注册捕获全局异常
     init_logger()
     logger.info("日志初始化成功！！！")  # 初始化日志
 
